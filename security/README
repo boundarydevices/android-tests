@@ -1,0 +1,14 @@
+Signing the application manually:
+
+java -jar security/signapk.jar -w security/platform.x509.pem security/platform.pk8 app/build/outputs/apk/app-debug.apk app-debug-signed.apk
+
+
+Setting up Android studio to sign the application automatically:
+
+1. Go to 'Build > Generate Signed APK Wizard'
+2. Enter the full path of the keystore located under security/platform.jks
+3. Enter 'android' as the key store password
+4. Enter 'androiddebugkey' as the key alias
+5. Enter 'android' as the key password
+6. Click on 'Next'
+7. Click on 'Finish'
