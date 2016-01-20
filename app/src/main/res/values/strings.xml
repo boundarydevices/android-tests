@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">PlatformTesting</string>
+    <string name="intro">Click on the button below once you are ready to start the patform testing.</string>
+    <string name="touch_test">Click on all the buttons below to get to the next test.</string>
+    <string name="accel_test">Do the coordinates change as expected?</string>
+    <string name="backlight_test">Does the backlight go from low to high?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="retry">Retry</string>
+    <string name="start">Start</string>
+    <string name="skip">Skip</string>
+    <string name="touch_1">Touch #1</string>
+    <string name="touch_2">Touch #2</string>
+    <string name="touch_3">Touch #3</string>
+    <string name="touch_4">Touch #4</string>
+    <string name="x">X: </string>
+    <string name="y">Y: </string>
+    <string name="z">Z: </string>
+</resources>

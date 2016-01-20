@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.boundarydevices.platformtesting.TestAccelerometer">
+
+    <TextView
+        android:id="@+id/text_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="30dp"
+        android:gravity="right"
+        android:text="@string/x"
+        android:textSize="12pt" />
+
+    <TextView
+        android:id="@+id/value_x"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/text_x"
+        android:layout_margin="30dp"
+        android:gravity="left"
+        android:textSize="12pt" />
+
+    <TextView
+        android:id="@+id/text_y"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_x"
+        android:layout_margin="30dp"
+        android:gravity="right"
+        android:text="@string/y"
+        android:textSize="12pt" />
+
+    <TextView
+        android:id="@+id/value_y"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_x"
+        android:layout_toRightOf="@id/text_y"
+        android:layout_margin="30dp"
+        android:gravity="left"
+        android:textSize="12pt" />
+
+    <TextView
+        android:id="@+id/text_z"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_y"
+        android:layout_margin="30dp"
+        android:gravity="right"
+        android:text="@string/z"
+        android:textSize="12pt" />
+
+    <TextView
+        android:id="@+id/value_z"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/text_y"
+        android:layout_toRightOf="@id/text_z"
+        android:layout_margin="30dp"
+        android:gravity="left"
+        android:textSize="12pt" />
+
+    <TextView
+        android:id="@+id/question_accel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_z"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="@string/accel_test"
+        android:textSize="12pt" />
+
+    <Button
+        android:id="@+id/button_accel_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no"
+        android:layout_below="@id/question_accel"
+        android:layout_margin="30dp"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/button_accel_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yes"
+        android:layout_below="@id/question_accel"
+        android:layout_margin="30dp"
+        android:layout_alignParentRight="true" />
+
+</RelativeLayout>

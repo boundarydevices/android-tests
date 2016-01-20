@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.boundarydevices.platformtesting.TestBacklight">
+
+    <TextView
+        android:id="@+id/question_backlight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_z"
+        android:layout_margin="30dp"
+        android:gravity="center"
+        android:text="@string/backlight_test"
+        android:textSize="12pt" />
+
+    <Button
+        android:id="@+id/button_backlight_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no"
+        android:layout_below="@id/question_backlight"
+        android:layout_margin="30dp"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/button_backlight_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        android:layout_below="@id/question_backlight"
+        android:layout_margin="30dp"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/button_backlight_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yes"
+        android:layout_below="@id/question_backlight"
+        android:layout_margin="30dp"
+        android:layout_alignParentRight="true" />
+</RelativeLayout>
