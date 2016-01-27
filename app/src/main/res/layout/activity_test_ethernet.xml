@@ -9,21 +9,11 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.boundarydevices.platformtesting.TestEthernet">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:minWidth="200dip"
-        android:id="@+id/eth_progress"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
     <TextView
         android:id="@+id/eth_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/eth_progress"
         android:layout_margin="30dp"
         android:gravity="center"
         android:textSize="12pt" />
@@ -36,4 +26,22 @@
         android:layout_below="@id/eth_text"
         android:layout_margin="30dp"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/button_eth_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no"
+        android:layout_below="@id/eth_text"
+        android:layout_margin="30dp"
+        android:layout_alignParentLeft="true" />
+
+    <Button
+        android:id="@+id/button_eth_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/yes"
+        android:layout_below="@id/eth_text"
+        android:layout_margin="30dp"
+        android:layout_alignParentRight="true" />
 </RelativeLayout>
