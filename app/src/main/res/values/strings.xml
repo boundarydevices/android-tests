@@ -4,6 +4,8 @@
     <string name="touch_test">Click on all the buttons below to get to the next test.</string>
     <string name="accel_test">Do the coordinates change as expected?</string>
     <string name="backlight_test">Does the backlight go from low to high?</string>
+    <string name="touch_fw_text">Touch screen firmware location:</string>
+    <string name="touch_fw_default">/system/etc/firmware/ISDTSV10.xcfg</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="retry">Retry</string>

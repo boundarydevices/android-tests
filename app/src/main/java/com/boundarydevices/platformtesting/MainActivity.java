@@ -32,7 +32,7 @@ public class MainActivity extends Activity {
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "Starting the test:\n" + textBuild.getText());
-                Intent intent = new Intent(mContext, TestTouchscreen.class);
+                Intent intent = new Intent(mContext, TouchConfiguration.class);
                 startActivity(intent);
             }
         });
