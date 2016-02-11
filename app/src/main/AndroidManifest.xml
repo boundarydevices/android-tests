@@ -33,6 +33,7 @@
         <activity android:name=".TestSdcard" />
         <activity android:name=".TestSummary" />
         <activity android:name=".TouchConfiguration" />
+        <activity android:name=".TestAudioOut" />
     </application>
 
 </manifest>

@@ -59,13 +59,23 @@ public class TestAudio extends Activity implements Recorder.OnStateChangedListen
             }
         });
 
+        final Button button_audio_skip = (Button) findViewById(R.id.button_audio_skip);
+        button_audio_skip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.v(TAG, "button_audio_skip");
+                stopAudioPlayback();
+                Intent intent = new Intent(mContext, TestAudioOut.class);
+                startActivity(intent);
+            }
+        });
+
         mAudioYes = (Button) findViewById(R.id.button_audio_yes);
         mAudioYes.setVisibility(View.INVISIBLE);
         mAudioYes.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "button_audio_yes");
                 TestResults.addResult(TAG, TestResults.TEST_RESULT_SUCCESS);
-                Intent intent = new Intent(mContext, TestUSB.class);
+                Intent intent = new Intent(mContext, TestAudioOut.class);
                 startActivity(intent);
             }
         });
@@ -75,7 +85,7 @@ public class TestAudio extends Activity implements Recorder.OnStateChangedListen
         mAudioNo.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "button_audio_no");
-                Intent intent = new Intent(mContext, TestUSB.class);
+                Intent intent = new Intent(mContext, TestAudioOut.class);
                 startActivity(intent);
             }
         });
