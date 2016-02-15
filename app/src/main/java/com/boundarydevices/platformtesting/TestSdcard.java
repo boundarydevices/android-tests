@@ -38,7 +38,7 @@ public class TestSdcard extends Activity {
         TestResults.addResult(TAG, TestResults.TEST_RESULT_FAILED);
 
         mSdcardText = (TextView) findViewById(R.id.sdcard_text);
-        mSdcardText.setText("Please insert a FAT32 formatted SD Card");
+        mSdcardText.setText("Please insert a SD Card");
 
         final Button button_sdcard_skip = (Button) findViewById(R.id.button_sdcard_skip);
         button_sdcard_skip.setOnClickListener(new View.OnClickListener() {
