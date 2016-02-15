@@ -38,7 +38,7 @@ public class TestUSB extends Activity {
         TestResults.addResult(TAG, TestResults.TEST_RESULT_FAILED);
 
         mUsbText = (TextView) findViewById(R.id.usb_text);
-        mUsbText.setText("Please insert a FAT32 formatted USB drive");
+        mUsbText.setText("Please insert a USB drive");
 
         final Button button_usb_skip = (Button) findViewById(R.id.button_usb_skip);
         button_usb_skip.setOnClickListener(new View.OnClickListener() {
