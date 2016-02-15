@@ -23,6 +23,7 @@ public class TestUSB extends Activity {
     private TextView mUsbText;
     private Button mUsbYes;
     private Button mUsbNo;
+    private WaitingTask mWaitingTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +39,6 @@ public class TestUSB extends Activity {
 
         mUsbText = (TextView) findViewById(R.id.usb_text);
         mUsbText.setText("Please insert a FAT32 formatted USB drive");
-
-        registerExternalStorageListener();
 
         final Button button_usb_skip = (Button) findViewById(R.id.button_usb_skip);
         button_usb_skip.setOnClickListener(new View.OnClickListener() {
@@ -71,13 +70,13 @@ public class TestUSB extends Activity {
             }
         });
 
-        new WaitingTask().execute();
+        mWaitingTask = new WaitingTask();
     }
 
     private class WaitingTask extends AsyncTask<Void, Integer, Void> {
         protected Void doInBackground(Void... values) {
             for (;;) {
-                if (mUsbMounted == true)
+                if ((mUsbMounted == true) || isCancelled())
                     break;
                 try {
                     Thread.sleep(500);
@@ -115,12 +114,20 @@ public class TestUSB extends Activity {
     }
 
     @Override
-    public void onDestroy() {
+    public void onResume() {
+        registerExternalStorageListener();
+        mWaitingTask.execute();
+        super.onResume();
+    }
+
+    @Override
+    public void onPause() {
         if (mSDCardMountEventReceiver != null) {
             unregisterReceiver(mSDCardMountEventReceiver);
             mSDCardMountEventReceiver = null;
         }
-        super.onDestroy();
+        mWaitingTask.cancel(true);
+        super.onPause();
     }
 
     private void registerExternalStorageListener() {
