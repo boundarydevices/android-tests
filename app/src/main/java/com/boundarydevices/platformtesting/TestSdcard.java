@@ -49,6 +49,15 @@ public class TestSdcard extends Activity {
             }
         });
 
+        final Button button_sdcard_force = (Button) findViewById(R.id.button_sdcard_force);
+        button_sdcard_force.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.v(TAG, "button_sdcard_force");
+                mSdcardText.setText("Reading SD card content\n");
+                listFiles();
+            }
+        });
+
         mSdcardYes = (Button) findViewById(R.id.button_sdcard_yes);
         mSdcardYes.setVisibility(View.INVISIBLE);
         mSdcardYes.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +82,31 @@ public class TestSdcard extends Activity {
         mWaitingTask = new WaitingTask();
     }
 
+    public void listFiles() {
+        File f = new File("/storage/extsd");
+        if (f.exists()) {
+            File file[] = f.listFiles();
+            if (file != null) {
+                Log.d(TAG, "Size: " + file.length);
+                for (int i = 0; i < file.length; i++) {
+                    Log.d(TAG, "FileName:" + file[i].getName());
+                    mSdcardText.append(file[i].getName() + "\n");
+                        /* In order not to have the display filled with name */
+                    if (i >= 10) {
+                        mSdcardText.append("... (skip the other files)\n");
+                    }
+                }
+                mSdcardText.append("\nIs it correct?");
+                mSdcardYes.setVisibility(View.VISIBLE);
+                mSdcardNo.setVisibility(View.VISIBLE);
+            } else {
+                mSdcardText.append("\n=> Failed to read content...");
+            }
+        } else {
+            Log.e(TAG, "/storage/extsd/ doesn't exist??");
+        }
+    }
+
     private class WaitingTask extends AsyncTask<Void, Integer, Void> {
         protected Void doInBackground(Void... values) {
             for (;;) {
@@ -92,24 +126,7 @@ public class TestSdcard extends Activity {
 
         protected void onPostExecute(Void result) {
             mSdcardText.setText("Found SD card with following content\n");
-            File f = new File("/storage/extsd");
-            if (f.exists()) {
-                File file[] = f.listFiles();
-                Log.d(TAG, "Size: " + file.length);
-                for (int i = 0; i < file.length; i++) {
-                    Log.d(TAG, "FileName:" + file[i].getName());
-                    mSdcardText.append(file[i].getName() + "\n");
-                    /* In order not to have the display filled with name */
-                    if (i >= 10) {
-                        mSdcardText.append("... (skip the other files)\n");
-                    }
-                }
-                mSdcardText.append("\nIs it correct?");
-                mSdcardYes.setVisibility(View.VISIBLE);
-                mSdcardNo.setVisibility(View.VISIBLE);
-            } else {
-                Log.e(TAG, "/storage/extsd/ doesn't exist??");
-            }
+            listFiles();
         }
     }
 
