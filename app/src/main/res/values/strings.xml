@@ -11,6 +11,7 @@
     <string name="retry">Retry</string>
     <string name="start">Start</string>
     <string name="skip">Skip</string>
+    <string name="force">Force</string>
     <string name="touch_1">Touch #1</string>
     <string name="touch_2">Touch #2</string>
     <string name="touch_3">Touch #3</string>

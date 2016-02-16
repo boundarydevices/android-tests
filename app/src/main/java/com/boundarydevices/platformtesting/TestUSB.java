@@ -49,6 +49,15 @@ public class TestUSB extends Activity {
             }
         });
 
+        final Button button_usb_force = (Button) findViewById(R.id.button_usb_force);
+        button_usb_force.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.v(TAG, "button_usb_force");
+                mUsbText.setText("Reading USB drive content\n");
+                listFiles();
+            }
+        });
+
         mUsbYes = (Button) findViewById(R.id.button_usb_yes);
         mUsbYes.setVisibility(View.INVISIBLE);
         mUsbYes.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +82,31 @@ public class TestUSB extends Activity {
         mWaitingTask = new WaitingTask();
     }
 
+    public void listFiles() {
+        File f = new File("/storage/udisk");
+        if (f.exists()) {
+            File file[] = f.listFiles();
+            if (file != null) {
+                Log.d(TAG, "Size: " + file.length);
+                for (int i = 0; i < file.length; i++) {
+                    Log.d(TAG, "FileName:" + file[i].getName());
+                    mUsbText.append(file[i].getName() + "\n");
+                    /* In order not to have the display filled with name */
+                    if (i >= 10) {
+                        mUsbText.append("... (skip the other files)\n");
+                    }
+                }
+                mUsbText.append("\nIs it correct?");
+                mUsbYes.setVisibility(View.VISIBLE);
+                mUsbNo.setVisibility(View.VISIBLE);
+            } else {
+                mUsbText.append("\n=> Failed to read content...");
+            }
+        } else {
+            Log.e(TAG, "/storage/udisk/ doesn't exist??");
+        }
+    }
+
     private class WaitingTask extends AsyncTask<Void, Integer, Void> {
         protected Void doInBackground(Void... values) {
             for (;;) {
@@ -92,24 +126,7 @@ public class TestUSB extends Activity {
 
         protected void onPostExecute(Void result) {
             mUsbText.setText("Found USB drive with following content\n");
-            File f = new File("/storage/udisk");
-            if (f.exists()) {
-                File file[] = f.listFiles();
-                Log.d(TAG, "Size: " + file.length);
-                for (int i = 0; i < file.length; i++) {
-                    Log.d(TAG, "FileName:" + file[i].getName());
-                    mUsbText.append(file[i].getName() + "\n");
-                    /* In order not to have the display filled with name */
-                    if (i >= 10) {
-                        mUsbText.append("... (skip the other files)\n");
-                    }
-                }
-                mUsbText.append("\nIs it correct?");
-                mUsbYes.setVisibility(View.VISIBLE);
-                mUsbNo.setVisibility(View.VISIBLE);
-            } else {
-                Log.e(TAG, "/storage/udisk/ doesn't exist??");
-            }
+            listFiles();
         }
     }
 
