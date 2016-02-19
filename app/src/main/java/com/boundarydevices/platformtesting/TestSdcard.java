@@ -44,6 +44,7 @@ public class TestSdcard extends Activity {
         button_sdcard_skip.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "button_sdcard_skip");
+                TestResults.addResult(TAG, TestResults.TEST_RESULT_SKIPPED);
                 Intent intent = new Intent(mContext, TestSummary.class);
                 startActivity(intent);
             }

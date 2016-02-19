@@ -44,6 +44,7 @@ public class TestUSB extends Activity {
         button_usb_skip.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "button_usb_skip");
+                TestResults.addResult(TAG, TestResults.TEST_RESULT_SKIPPED);
                 Intent intent = new Intent(mContext, TestSdcard.class);
                 startActivity(intent);
             }

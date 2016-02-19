@@ -81,6 +81,7 @@ public class TestNfc extends Activity {
         button_nfc_skip.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "button_nfc_skip");
+                TestResults.addResult(TAG, TestResults.TEST_RESULT_SKIPPED);
                 Intent intent = new Intent(mContext, TestEthernet.class);
                 startActivity(intent);
             }

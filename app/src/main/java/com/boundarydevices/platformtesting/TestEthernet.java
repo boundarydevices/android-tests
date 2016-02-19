@@ -63,6 +63,7 @@ public class TestEthernet extends Activity {
         button_eth_skip.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "button_eth_skip");
+                TestResults.addResult(TAG, TestResults.TEST_RESULT_SKIPPED);
                 Intent intent = new Intent(mContext, TestAudio.class);
                 startActivity(intent);
             }

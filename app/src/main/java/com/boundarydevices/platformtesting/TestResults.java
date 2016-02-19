@@ -10,6 +10,7 @@ public class TestResults {
     static final String TAG = "TestResults";
     static final String TEST_RESULT_SUCCESS = "success";
     static final String TEST_RESULT_FAILED = "failed";
+    static final String TEST_RESULT_SKIPPED = "skipped";
     static Map<String, String> mResults = new HashMap<String,String>();
 
     static void addResult(String name, String result) {

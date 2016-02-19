@@ -44,6 +44,7 @@ public class TestAudioOut extends Activity {
                 mTrack.stop();
                 mTrack.release();
                 Log.v(TAG, "button_audio_skip");
+                TestResults.addResult(TAG, TestResults.TEST_RESULT_SKIPPED);
                 Intent intent = new Intent(mContext, TestUSB.class);
                 startActivity(intent);
             }
