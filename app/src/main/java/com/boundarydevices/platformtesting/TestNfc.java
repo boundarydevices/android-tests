@@ -21,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class TestNfc extends Activity {
 
@@ -119,22 +120,40 @@ public class TestNfc extends Activity {
         mNfcAdapter.disableForegroundNdefPush(this);
     }
 
+    private String readText(NdefMessage msg) {
+        NdefRecord record[] = msg.getRecords();
+        /*
+         * See NFC forum specification for "Text Record Type Definition" at 3.2.1
+         * This test doesn't match NFC standard => force encoding
+         * For a standard approach look at:
+         * http://code.tutsplus.com/tutorials/reading-nfc-tags-with-android--mobile-17278
+         */
+        byte[] payload = record[0].getPayload();
+        return new String(payload, StandardCharsets.UTF_8);
+    }
+
     @Override
     protected void onNewIntent(Intent intent) {
         Log.v(TAG, "Received intent " + intent.toString());
         // NDEF exchange mode
         if (!mWriteMode && NfcAdapter.ACTION_NDEF_DISCOVERED.equals(intent.getAction())) {
             NdefMessage[] msgs = getNdefMessages(intent);
-            Log.v(TAG, "read " + msgs[0]);
-            mNfcText.setText("Content matches, test successful!");
-            TestResults.addResult(TAG, TestResults.TEST_RESULT_SUCCESS);
+            Log.v(TAG, "read " + readText(msgs[0]));
+            mNfcText.append("\n\nRead \"" + readText(msgs[0]) + "\" back from TAG");
+            if (readText(msgs[0]).toString().equals(NFC_TEXT)) {
+                mNfcText.append("\nContent matches, test successful!");
+                TestResults.addResult(TAG, TestResults.TEST_RESULT_SUCCESS);
+            }
             Intent intentNext = new Intent(mContext, TestEthernet.class);
             startActivity(intentNext);
         }
 
         // Tag writing mode
         if (mWriteMode && NfcAdapter.ACTION_TAG_DISCOVERED.equals(intent.getAction())) {
-            mNfcText.setText("Writing data to the TAG");
+            NdefMessage[] msgs = getNdefMessages(intent);
+            mNfcText.append("\n\nOld data from the TAG: " + readText(msgs[0]));
+            Log.v(TAG, "Old data from the TAG: " + readText(msgs[0]));
+            mNfcText.append("\nWriting \"" + NFC_TEXT + "\" to the TAG");
             Log.v(TAG, "Writing data to the TAG");
             Tag detectedTag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
             writeTag(getNoteAsNdef(), detectedTag);
@@ -224,7 +243,7 @@ public class TestNfc extends Activity {
 
                 ndef.writeNdefMessage(message);
                 toast("Wrote message to pre-formatted tag.");
-                mNfcText.setText("Please remove the TAG and put it back in order to read its content");
+                mNfcText.append("\n\nPlease remove the TAG and put it back in order to read its content");
                 mWriteMode = false;
                 return true;
             } else {
@@ -234,7 +253,7 @@ public class TestNfc extends Activity {
                         format.connect();
                         format.format(message);
                         toast("Formatted tag and wrote message");
-                        mNfcText.setText("Please remove the TAG and put it back in order to read its content");
+                        mNfcText.append("\n\nPlease remove the TAG and put it back in order to read its content");
                         mWriteMode = false;
                         return true;
                     } catch (IOException e) {
