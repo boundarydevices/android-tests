@@ -58,6 +58,15 @@ public class TestTouchscreen extends Activity {
                 checkButtons();
             }
         });
+        final Button button_touch_skip = (Button) findViewById(R.id.button_touch_skip);
+        button_touch_skip.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.v(TAG, "button_touch_skip");
+                TestResults.addResult(TAG, TestResults.TEST_RESULT_SKIPPED);
+                Intent intent = new Intent(mContext, TestAccelerometer.class);
+                startActivity(intent);
+            }
+        });
     }
 
     void checkButtons() {
