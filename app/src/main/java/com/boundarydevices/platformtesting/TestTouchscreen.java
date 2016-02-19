@@ -63,7 +63,7 @@ public class TestTouchscreen extends Activity {
             public void onClick(View v) {
                 Log.v(TAG, "button_touch_skip");
                 TestResults.addResult(TAG, TestResults.TEST_RESULT_SKIPPED);
-                Intent intent = new Intent(mContext, TestAccelerometer.class);
+                Intent intent = new Intent(mContext, TestTouchAuto.class);
                 startActivity(intent);
             }
         });
@@ -76,7 +76,7 @@ public class TestTouchscreen extends Activity {
         }
         Log.v(TAG, "All buttons touched, next test");
         TestResults.addResult(TAG, TestResults.TEST_RESULT_SUCCESS);
-        Intent intent = new Intent(mContext, TestAccelerometer.class);
+        Intent intent = new Intent(mContext, TestTouchAuto.class);
         startActivity(intent);
     }
 }

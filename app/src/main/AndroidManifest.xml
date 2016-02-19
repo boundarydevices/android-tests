@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.boundarydevices.platformtesting"
-    android:sharedUserId="android.uid.system" >
+    package="com.boundarydevices.platformtesting" >
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -34,6 +33,7 @@
         <activity android:name=".TestSummary" />
         <activity android:name=".TouchConfiguration" />
         <activity android:name=".TestAudioOut" />
+        <activity android:name=".TestTouchAuto" />
     </application>
 
 </manifest>
