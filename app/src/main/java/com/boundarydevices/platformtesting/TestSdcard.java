@@ -17,6 +17,7 @@ import java.io.File;
 public class TestSdcard extends Activity {
 
     private final String TAG = this.getClass().getSimpleName();
+    private final int MB = 1024 * 1024;
     private Context mContext;
     private BroadcastReceiver mSDCardMountEventReceiver = null;
     private boolean mSdcardMounted = false;
@@ -88,7 +89,8 @@ public class TestSdcard extends Activity {
         if (f.exists()) {
             File file[] = f.listFiles();
             if (file != null) {
-                Log.d(TAG, "Size: " + file.length);
+                mSdcardText.append("Free space: " + f.getFreeSpace() / MB + "M / " +
+                        f.getTotalSpace() / MB + "M\n");
                 for (int i = 0; i < file.length; i++) {
                     Log.d(TAG, "FileName:" + file[i].getName());
                     mSdcardText.append(file[i].getName() + "\n");
