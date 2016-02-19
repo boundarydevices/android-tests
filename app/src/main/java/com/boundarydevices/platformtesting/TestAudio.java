@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 public class TestAudio extends Activity implements Recorder.OnStateChangedListener {
 
-    private final String TAG = this.getClass().getSimpleName();
+    private final String TAG = "TestAudioRecordPlayback";
     private Context mContext;
     Recorder mRecorder;
     private ProgressBar mAudioProgress;
