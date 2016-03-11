@@ -19,7 +19,8 @@ public class TestTouchAuto extends Activity {
     private final String TAG = this.getClass().getSimpleName();
     private Context mContext;
     private TextView mTouchAutoText;
-
+    private Button mTouchAutoStart;
+    private Button mTouchAutoRetry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,71 +50,90 @@ public class TestTouchAuto extends Activity {
             }
         });
 
-        final Button touch_auto_start = (Button) findViewById(R.id.touch_auto_start);
-        touch_auto_start.setOnClickListener(new View.OnClickListener() {
+        mTouchAutoStart = (Button) findViewById(R.id.touch_auto_start);
+        mTouchAutoStart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "touch_auto_start");
-                mTouchAutoText.setText("Starting mxt-app test...");
-                try {
-                    // Preform su to get root privileges
-                    Process p = Runtime.getRuntime().exec("su");
-
-                    // Get stdin/stdout of that new process
-                    DataOutputStream osOut = new DataOutputStream(p.getOutputStream());
-                    DataInputStream osIn = new DataInputStream(p.getInputStream());
-
-                    // Execute command
-                    osOut.writeBytes("mxt-app -t 2>&1\n");
-                    osOut.flush();
-
-                    // give the tool a second to execute
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-
-                    // Read the return value
-                    byte[] buffer = new byte[64];
-                    int read;
-                    String out = new String();
-                    while(true) {
-                        read = osIn.read(buffer);
-                        out += new String(buffer, 0, read);
-                        if (read < 64) {
-                            break;
-                        }
-                    }
-                    Log.v(TAG, "mxt-app output:\n" + out);
-                    mTouchAutoText.append("\n\n" + out);
-
-                    // Close the terminal
-                    osOut.writeBytes("exit\n");
-                    osOut.flush();
-
-                    try {
-                        p.waitFor();
-                        if (p.exitValue() == 0) {
-                            Log.v(TAG, "root => exit " + p.exitValue());
-                        } else {
-                            Log.v(TAG, "not root => exit " + p.exitValue());
-                        }
-                    } catch (InterruptedException e) {
-                        Log.v(TAG, "not root");
-                    }
-                } catch (IOException e) {
-                    Log.v(TAG, "not root");
+                if (mTouchAutoStart.getText().equals("Next")) {
+                    Intent intent = new Intent(mContext, TestAccelerometer.class);
+                    startActivity(intent);
+                    return;
                 }
-                if (mTouchAutoText.getText().toString().contains("PASS")) {
-                    TestResults.addResult(TAG, TestResults.TEST_RESULT_SUCCESS);
-                    mTouchAutoText.append("\n=> PASSED");
-                } else {
-                    mTouchAutoText.append("\n=> FAILED");
-                }
-
-                Intent intent = new Intent(mContext, TestAccelerometer.class);
-                startActivity(intent);
+                doTest();
+                mTouchAutoStart.setText("Next");
+                mTouchAutoRetry.setEnabled(true);
+                mTouchAutoRetry.setVisibility(View.VISIBLE);
             }
         });
+
+        mTouchAutoRetry = (Button) findViewById(R.id.touch_auto_retry);
+        mTouchAutoRetry.setEnabled(false);
+        mTouchAutoRetry.setVisibility(View.INVISIBLE);
+        mTouchAutoRetry.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Log.v(TAG, "touch_auto_retry");
+                doTest();
+            }
+        });
+    }
+
+    private void doTest() {
+        mTouchAutoText.setText("Starting mxt-app test...");
+        try {
+            // Preform su to get root privileges
+            Process p = Runtime.getRuntime().exec("su");
+
+            // Get stdin/stdout of that new process
+            DataOutputStream osOut = new DataOutputStream(p.getOutputStream());
+            DataInputStream osIn = new DataInputStream(p.getInputStream());
+
+            // Execute command
+            osOut.writeBytes("mxt-app -t 2>&1\n");
+            osOut.flush();
+
+            // give the tool a second to execute
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            // Read the return value
+            byte[] buffer = new byte[64];
+            int read;
+            String out = new String();
+            while(true) {
+                read = osIn.read(buffer);
+                out += new String(buffer, 0, read);
+                if (read < 64) {
+                    break;
+                }
+            }
+            Log.v(TAG, "mxt-app output:\n" + out);
+            mTouchAutoText.append("\n\n" + out);
+
+            // Close the terminal
+            osOut.writeBytes("exit\n");
+            osOut.flush();
+
+            try {
+                p.waitFor();
+                if (p.exitValue() == 0) {
+                    Log.v(TAG, "root => exit " + p.exitValue());
+                } else {
+                    Log.v(TAG, "not root => exit " + p.exitValue());
+                }
+            } catch (InterruptedException e) {
+                Log.v(TAG, "not root");
+            }
+        } catch (IOException e) {
+            Log.v(TAG, "not root");
+        }
+        if (mTouchAutoText.getText().toString().contains("PASS")) {
+            TestResults.addResult(TAG, TestResults.TEST_RESULT_SUCCESS);
+            mTouchAutoText.append("\n=> PASSED");
+        } else {
+            mTouchAutoText.append("\n=> FAILED");
+        }
     }
 }

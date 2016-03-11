@@ -16,7 +16,16 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="30dp"
         android:gravity="center"
-        android:textSize="12pt" />
+        android:textSize="10pt" />
+
+    <Button
+        android:id="@+id/touch_auto_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/retry"
+        android:layout_below="@id/touch_auto_text"
+        android:layout_margin="30dp"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/touch_auto_start"
