@@ -12,6 +12,7 @@ import android.nfc.Tag;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NdefFormatable;
 import android.os.Parcelable;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -26,7 +27,7 @@ import java.nio.charset.StandardCharsets;
 public class TestNfc extends Activity {
 
     private final String TAG = this.getClass().getSimpleName();
-    private final String NFC_TEXT = "BoundaryDevices";
+    private final String NFC_TEXT = "NFC Test " + Build.SERIAL;
     private final int NFC_DETECTION = 1;
     private final int NFC_WRITE = 2;
     private final int NFC_READ = 3;
@@ -37,6 +38,7 @@ public class TestNfc extends Activity {
     NfcAdapter mNfcAdapter;
     private TextView mNfcText;
     private ProgressBar mNfcProgress;
+    private Button mButtonNfcStart;
 
     PendingIntent mNfcPendingIntent;
     IntentFilter[] mWriteTagFilters;
@@ -88,14 +90,19 @@ public class TestNfc extends Activity {
             }
         });
 
-        final Button button_nfc_start = (Button) findViewById(R.id.button_nfc_start);
-        button_nfc_start.setOnClickListener(new View.OnClickListener() {
+        mButtonNfcStart = (Button) findViewById(R.id.button_nfc_start);
+        mButtonNfcStart.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Log.v(TAG, "button_nfc_start");
-                mNfcText.setText("Please present the TAG in front of the antenna");
-                mNfcProgress.setVisibility(View.VISIBLE);
-                disableNdefExchangeMode();
-                enableTagWriteMode();
+                if (mButtonNfcStart.getText().equals("Next")) {
+                    Intent intentNext = new Intent(mContext, TestEthernet.class);
+                    startActivity(intentNext);
+                } else {
+                    mNfcText.setText("Please present the TAG in front of the antenna");
+                    mNfcProgress.setVisibility(View.VISIBLE);
+                    disableNdefExchangeMode();
+                    enableTagWriteMode();
+                }
             }
         });
     }
@@ -144,8 +151,7 @@ public class TestNfc extends Activity {
                 mNfcText.append("\nContent matches, test successful!");
                 TestResults.addResult(TAG, TestResults.TEST_RESULT_SUCCESS);
             }
-            Intent intentNext = new Intent(mContext, TestEthernet.class);
-            startActivity(intentNext);
+            mButtonNfcStart.setText("Next");
         }
 
         // Tag writing mode
