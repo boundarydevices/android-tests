@@ -21,6 +21,7 @@ model {
     }
     android.ndk {
         moduleName = "i2c-android-jni"
+        ldLibs.add("log")
     }
 }
 
