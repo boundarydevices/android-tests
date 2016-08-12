@@ -12,5 +12,7 @@ public class I2CDevice {
     public native int writeByte(int fd, int offset, byte value);
     public native int readBlock(int fd, int offset, byte[] buffer);
     public native int writeBlock(int fd, int offset, byte[] buffer, int count);
+    public native int readBytesArray(int fd, int offset, byte[] buffer, int count);
+    public native int writeBytesArray(int fd, int offset, byte[] buffer, int count);
     public native void close(int fd);
 }

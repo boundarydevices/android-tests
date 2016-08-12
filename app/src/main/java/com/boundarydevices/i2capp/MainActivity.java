@@ -17,7 +17,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         int result;
-        int backup;
+        byte data[] = new byte[4];
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -39,7 +39,16 @@ public class MainActivity extends Activity {
             return;
         }
         mTextView.append("Received month value: " + result + "\n");
-        backup = result;
+
+        mTextView.append("\nReading 4bytes at once...\n");
+        result = device.readBytesArray(mFileDesc, I2C_RTC_MONTH, data, data.length);
+        if (result < 0) {
+            mTextView.append("Error read: " + result);
+            return;
+        }
+        mTextView.append("Received: " + result + "bytes");
+        for (int i = 0; i < data.length; i++)
+            mTextView.append(" " + Integer.toHexString(data[i]));
 
         /* Closing the device file descriptor */
         device.close(mFileDesc);

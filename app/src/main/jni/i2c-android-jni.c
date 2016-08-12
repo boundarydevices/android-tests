@@ -11,6 +11,8 @@
 #define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO, LOG_TAG, __VA_ARGS__)
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
+static int devAddr;
+
 int smbus_xfer(int fd, int read_write, int command, int size, union i2c_smbus_data *buffer)
 {
     struct i2c_smbus_ioctl_data data;
@@ -39,6 +41,7 @@ Java_com_boundarydevices_i2capp_I2CDevice_open(JNIEnv *env, jobject instance, ji
     }
 
     LOGD("Setting address to %#02x", address);
+    devAddr = address;
     ret = ioctl(fd, I2C_SLAVE_FORCE, address);
     if (ret != 0) {
         LOGE("Couldn't set slave address: %s", strerror(errno));
@@ -114,6 +117,62 @@ Java_com_boundarydevices_i2capp_I2CDevice_writeBlock(JNIEnv *env, jobject instan
     (*env)->ReleaseByteArrayElements(env, buffer_, buffer, 0);
 
     return smbus_xfer(fd, I2C_SMBUS_WRITE, offset, I2C_SMBUS_BLOCK_DATA, &data);
+
+}
+
+JNIEXPORT jint JNICALL
+Java_com_boundarydevices_i2capp_I2CDevice_readBytesArray(JNIEnv *env, jobject instance, jint fd,
+                                                         jint offset, jbyteArray buffer_, jint count) {
+    jbyte *buffer = (*env)->GetByteArrayElements(env, buffer_, NULL);
+
+    int ret;
+    /* Create I2C messages */
+    struct i2c_rdwr_ioctl_data data;
+    struct i2c_msg msgs[2] = {
+            {devAddr, 0, 1, &offset},
+            {devAddr, I2C_M_RD, count, buffer},
+    };
+
+    data.msgs  = msgs;
+    data.nmsgs = 2;
+    ret = ioctl(fd, I2C_RDWR, &data);
+
+    (*env)->ReleaseByteArrayElements(env, buffer_, buffer, 0);
+
+    return ret;
+}
+
+JNIEXPORT jint JNICALL
+Java_com_boundarydevices_i2capp_I2CDevice_writeBytesArray(JNIEnv *env, jobject instance, jint fd,
+                                                          jint offset, jbyteArray buffer_, jint count) {
+    jbyte *buffer = (*env)->GetByteArrayElements(env, buffer_, NULL);
+
+    int ret;
+    int i;
+    /* Allocate write buffer */
+    uint8_t *buf = malloc(count + 1);
+    if (buf == NULL)
+        return -1;
+    /* Create I2C messages */
+    struct i2c_rdwr_ioctl_data data;
+    struct i2c_msg msgs[1] = {
+		{devAddr, 0, count + 1, buf},
+	};
+
+    /* Fill up write buffer */
+    buf[0] = offset;
+    for (i = 0; i < count; i++)
+        buf[i+1] = buffer[i];
+
+    data.msgs  = msgs;
+    data.nmsgs = 1;
+    ret = ioctl(fd, I2C_RDWR, &data);
+
+    (*env)->ReleaseByteArrayElements(env, buffer_, buffer, 0);
+
+    free(buf);
+
+    return ret;
 
 }
 
