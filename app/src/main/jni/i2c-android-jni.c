@@ -75,7 +75,7 @@ Java_com_boundarydevices_i2capp_I2CDevice_writeByte(JNIEnv *env, jobject instanc
 
 JNIEXPORT jint JNICALL
 Java_com_boundarydevices_i2capp_I2CDevice_readBlock(JNIEnv *env, jobject instance, jint fd,
-                                                    jint offset, jbyteArray buffer_, jint count) {
+                                                    jint offset, jbyteArray buffer_) {
     jbyte *buffer = (*env)->GetByteArrayElements(env, buffer_, NULL);
 
     union i2c_smbus_data data;
