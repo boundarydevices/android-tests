@@ -1,32 +1,31 @@
-apply plugin: 'com.android.model.application'
+apply plugin: 'com.android.application'
 
-model {
-    android {
-        compileSdkVersion = 23
-        buildToolsVersion = "23.0.2"
+android {
+    compileSdkVersion 29
+    buildToolsVersion '29.0.3'
 
-        defaultConfig.with {
-            applicationId = "com.boundarydevices.i2capp"
-            minSdkVersion.apiLevel = 19
-            targetSdkVersion.apiLevel = 23
-            versionCode = 1
-            versionName = "1.0"
+    defaultConfig {
+        applicationId "com.boundarydevices.i2capp"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+    }
+
+    externalNativeBuild {
+        ndkBuild {
+            path "src/main/jni/Android.mk"
         }
     }
-    android.buildTypes {
+
+    buildTypes {
         release {
-            minifyEnabled = false
+            minifyEnabled false
             proguardFiles.add(file('proguard-android.txt'))
         }
-    }
-    android.ndk {
-        moduleName = "i2c-android-jni"
-        ldLibs.add("log")
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.1'
+    implementation 'com.android.support:appcompat-v7:28.0.0'
 }
