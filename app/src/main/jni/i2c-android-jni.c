@@ -1,9 +1,15 @@
 #include <jni.h>
+#include <errno.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/ioctl.h>
+#include <unistd.h>
 #include <android/log.h>
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
+#include <jni.h>
 
 /* Define Log macros */
 #define  LOG_TAG    "i2c-android-jni"
@@ -173,7 +179,6 @@ Java_com_boundarydevices_i2capp_I2CDevice_writeBytesArray(JNIEnv *env, jobject i
     free(buf);
 
     return ret;
-
 }
 
 JNIEXPORT void JNICALL
