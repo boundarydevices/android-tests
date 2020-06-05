@@ -10,6 +10,8 @@
 #include <linux/i2c.h>
 #include <linux/i2c-dev.h>
 #include <jni.h>
+#include <stdbool.h>
+#include "gpiod.h"
 
 /* Define Log macros */
 #define  LOG_TAG    "gpio-android-jni"
@@ -20,12 +22,18 @@
 JNIEXPORT jint JNICALL
 Java_com_boundarydevices_gpioapp_GpioDevice_get(JNIEnv *env, jobject thiz, jint bank, jint pin)
 {
+    char device[16];
+    snprintf(device, sizeof(device), "gpiochip%d", bank);
     LOGD("Get gpio bank %d pin %d", bank, pin);
+    return gpiod_ctxless_get_value(device, pin, false, LOG_TAG);
 }
 
 JNIEXPORT jint JNICALL
 Java_com_boundarydevices_gpioapp_GpioDevice_set(JNIEnv *env, jobject thiz, jint bank, jint pin,
                                                 jint value)
 {
+    char device[16];
+    snprintf(device, sizeof(device), "gpiochip%d", bank);
     LOGD("Set gpio bank %d pin %d to %d", bank, pin, value);
+    return gpiod_ctxless_set_value(device, pin, value, false, LOG_TAG, NULL, NULL);
 }
