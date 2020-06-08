@@ -4,8 +4,14 @@ public class GpioDevice {
     static {
         System.loadLibrary("gpio-android-jni");
     }
-    public native int get(int bank, int pin);
-    public native int set(int bank, int pin, int value);
+    public native int get(int bank, int pin, boolean active_low);
+    public native int set(int bank, int pin, boolean active_low, int value);
+    public int get(int bank, int pin) {
+        return get(bank, pin, false);
+    }
+    public int set(int bank, int pin, int value) {
+        return set(bank, pin, false, value);
+    }
     public int getBank(int gpioNumber) {
         int bank = 0;
         while ((gpioNumber -= 32) > 0)

@@ -20,20 +20,21 @@
 #define  LOGE(...)  __android_log_print(ANDROID_LOG_ERROR, LOG_TAG, __VA_ARGS__)
 
 JNIEXPORT jint JNICALL
-Java_com_boundarydevices_gpioapp_GpioDevice_get(JNIEnv *env, jobject thiz, jint bank, jint pin)
+Java_com_boundarydevices_gpioapp_GpioDevice_get(JNIEnv *env, jobject thiz, jint bank,
+                                                jint pin, jboolean active_low)
 {
     char device[16];
     snprintf(device, sizeof(device), "gpiochip%d", bank);
     LOGD("Get gpio bank %d pin %d", bank, pin);
-    return gpiod_ctxless_get_value(device, pin, false, LOG_TAG);
+    return gpiod_ctxless_get_value(device, pin, active_low, LOG_TAG);
 }
 
 JNIEXPORT jint JNICALL
-Java_com_boundarydevices_gpioapp_GpioDevice_set(JNIEnv *env, jobject thiz, jint bank, jint pin,
-                                                jint value)
+Java_com_boundarydevices_gpioapp_GpioDevice_set(JNIEnv *env, jobject thiz, jint bank,
+                                                jint pin, jboolean active_low, jint value)
 {
     char device[16];
     snprintf(device, sizeof(device), "gpiochip%d", bank);
     LOGD("Set gpio bank %d pin %d to %d", bank, pin, value);
-    return gpiod_ctxless_set_value(device, pin, value, false, LOG_TAG, NULL, NULL);
+    return gpiod_ctxless_set_value(device, pin, value, active_low, LOG_TAG, NULL, NULL);
 }
