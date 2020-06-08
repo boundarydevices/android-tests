@@ -42,6 +42,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toogleButtonGpio7.setOnClickListener(this);
 
         gpioDevice = new GpioDevice();
+
+        /* Initialize all GPIO to 0 at first */
+        gpioDevice.set(gpioDevice.getBank(GPIO1), gpioDevice.getPin(GPIO1), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIO2), gpioDevice.getPin(GPIO2), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIO3), gpioDevice.getPin(GPIO3), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIO4), gpioDevice.getPin(GPIO4), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIO5), gpioDevice.getPin(GPIO5), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIO6), gpioDevice.getPin(GPIO6), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIO7), gpioDevice.getPin(GPIO7), ActiveLow, 0);
     }
 
     @Override
