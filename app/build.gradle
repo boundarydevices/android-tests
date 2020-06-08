@@ -1,6 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
+    signingConfigs {
+            platform {
+            storeFile file('platform.jks')
+            storePassword 'android'
+            keyAlias 'platform'
+            keyPassword 'android'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion '29.0.3'
 
@@ -22,6 +30,10 @@ android {
         release {
             minifyEnabled false
             proguardFiles.add(file('proguard-android.txt'))
+            signingConfig signingConfigs.platform
+        }
+        debug {
+            signingConfig signingConfigs.platform
         }
     }
 }
