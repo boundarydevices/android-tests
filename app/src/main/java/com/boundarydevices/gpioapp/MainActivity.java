@@ -17,6 +17,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int GPIO5 = 113;
     private static final int GPIO6 = 114;
     private static final int GPIO7 = 115;
+    private static final int GPIOR = 68;
+    private static final int GPIOG = 69;
+    private static final int GPIOB = 80;
+
     private static final boolean ActiveLow = true;
 
     private GpioDevice gpioDevice;
@@ -33,6 +37,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ToggleButton toogleButtonGpio5 = findViewById(R.id.toggleButtonGpio5);
         ToggleButton toogleButtonGpio6 = findViewById(R.id.toggleButtonGpio6);
         ToggleButton toogleButtonGpio7 = findViewById(R.id.toggleButtonGpio7);
+        ToggleButton toogleButtonGpioR = findViewById(R.id.toggleButtonGpioR);
+        ToggleButton toogleButtonGpioG = findViewById(R.id.toggleButtonGpioG);
+        ToggleButton toogleButtonGpioB = findViewById(R.id.toggleButtonGpioB);
+
 
         toogleButtonGpio1.setOnClickListener(this);
         toogleButtonGpio2.setOnClickListener(this);
@@ -41,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toogleButtonGpio5.setOnClickListener(this);
         toogleButtonGpio6.setOnClickListener(this);
         toogleButtonGpio7.setOnClickListener(this);
+        toogleButtonGpioR.setOnClickListener(this);
+        toogleButtonGpioG.setOnClickListener(this);
+        toogleButtonGpioB.setOnClickListener(this);
 
         gpioDevice = new GpioDevice();
 
@@ -52,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         gpioDevice.set(gpioDevice.getBank(GPIO5), gpioDevice.getPin(GPIO5), ActiveLow, 0);
         gpioDevice.set(gpioDevice.getBank(GPIO6), gpioDevice.getPin(GPIO6), ActiveLow, 0);
         gpioDevice.set(gpioDevice.getBank(GPIO7), gpioDevice.getPin(GPIO7), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIOR), gpioDevice.getPin(GPIOR), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIOG), gpioDevice.getPin(GPIOG), ActiveLow, 0);
+        gpioDevice.set(gpioDevice.getBank(GPIOB), gpioDevice.getPin(GPIOB), ActiveLow, 0);
     }
 
     @Override
@@ -91,6 +105,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.toggleButtonGpio7:
                 Log.i(TAG, "GPIO 7 is now " + toggleButton.isChecked());
                 gpioDevice.set(gpioDevice.getBank(GPIO7), gpioDevice.getPin(GPIO7),
+                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                break;
+            case R.id.toggleButtonGpioR:
+                Log.i(TAG, "GPIO R is now " + toggleButton.isChecked());
+                gpioDevice.set(gpioDevice.getBank(GPIOR), gpioDevice.getPin(GPIOR),
+                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                break;
+            case R.id.toggleButtonGpioG:
+                Log.i(TAG, "GPIO G is now " + toggleButton.isChecked());
+                gpioDevice.set(gpioDevice.getBank(GPIOG), gpioDevice.getPin(GPIOG),
+                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                break;
+            case R.id.toggleButtonGpioB:
+                Log.i(TAG, "GPIO B is now " + toggleButton.isChecked());
+                gpioDevice.set(gpioDevice.getBank(GPIOB), gpioDevice.getPin(GPIOB),
                         ActiveLow, toggleButton.isChecked() ? 1 : 0);
                 break;
             default:
