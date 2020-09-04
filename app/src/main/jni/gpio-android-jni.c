@@ -38,3 +38,24 @@ Java_com_boundarydevices_gpioapp_GpioDevice_set(JNIEnv *env, jobject thiz, jint 
     LOGD("Set gpio bank %d pin %d to %d", bank, pin, value);
     return gpiod_ctxless_set_value(device, pin, value, active_low, LOG_TAG, NULL, NULL);
 }
+
+JNIEXPORT jint JNICALL
+Java_com_boundarydevices_gpioapp_GpioDevice_waitPinEvent(JNIEnv *env, jobject thiz, jint bank,
+                                                         jint pin, jint timeout_s)
+{
+    struct gpiod_chip *chip = gpiod_chip_open_by_number(bank);
+    struct gpiod_line *line = gpiod_chip_get_line(chip, pin);
+    struct timespec timeout = { .tv_sec = timeout_s, .tv_nsec = 0};
+
+    int ret = gpiod_line_request_both_edges_events(line, LOG_TAG);
+    if (ret < 0) {
+        LOGE("Couldn't request gpio bank %d pin %d events", bank, pin);
+        return ret;
+    }
+
+    ret = gpiod_line_event_wait(line, &timeout);
+
+    gpiod_line_release(line);
+
+    return ret;
+}
