@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ToggleButton;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, GpioDevice.GpioDeviceListener {
 
     private static final String TAG = "GpioApp";
     private static final int GPIO1 = 109;
@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int GPIOR = 68;
     private static final int GPIOG = 69;
     private static final int GPIOB = 80;
+    private static final int GPIO_FB1 = 71;
+    private static final int GPIO_FB2 = 72;
 
     private static final boolean ActiveLow = true;
 
@@ -53,7 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toogleButtonGpioG.setOnClickListener(this);
         toogleButtonGpioB.setOnClickListener(this);
 
-        gpioDevice = new GpioDevice();
+        gpioDevice = new GpioDevice(this);
+        gpioDevice.subscribePinEvent(GPIO_FB1, 2);
+        gpioDevice.subscribePinEvent(GPIO_FB2, 2);
 
         /* Initialize all GPIO to 0 at first */
         gpioDevice.set(gpioDevice.getBank(GPIO1), gpioDevice.getPin(GPIO1), ActiveLow, 0);
@@ -125,5 +129,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             default:
                 Log.d(TAG, "unknown id: " + v.getId());
         }
+    }
+
+    @Override
+    public void onGpioDeviceEvent(int gpio, int state) {
+        Log.i(TAG, "Received event for GPIO " + gpio + " whose state is now " + state);
     }
 }
