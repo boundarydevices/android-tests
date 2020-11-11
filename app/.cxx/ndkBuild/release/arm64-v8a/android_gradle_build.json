@@ -1,0 +1,33 @@
+{
+  "buildFiles": [
+    "C:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\spatel\\AppData\\Local\\Android\\Sdk\\ndk\\21.2.6472646\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk APP_ABI\u003darm64-v8a NDK_ALL_ABIS\u003darm64-v8a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-29 NDK_OUT\u003dC:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\lib clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\spatel\\AppData\\Local\\Android\\Sdk\\ndk\\21.2.6472646\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk APP_ABI\u003darm64-v8a NDK_ALL_ABIS\u003darm64-v8a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-29 NDK_OUT\u003dC:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\lib {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "gpio-android-jni-release-arm64-v8a": {
+      "buildCommand": "C:\\Users\\spatel\\AppData\\Local\\Android\\Sdk\\ndk\\21.2.6472646\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk APP_ABI\u003darm64-v8a NDK_ALL_ABIS\u003darm64-v8a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-29 NDK_OUT\u003dC:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\lib C:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj/local/arm64-v8a/libgpio-android-jni.so",
+      "toolchain": "toolchain-arm64-v8a",
+      "abi": "arm64-v8a",
+      "artifactName": "gpio-android-jni",
+      "files": [
+        {
+          "src": "C:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\gpio-android-jni.c",
+          "flags": "-target aarch64-none-linux-android29 -fdata-sections -ffunction-sections -fstack-protector-strong -funwind-tables -no-canonical-prefixes --sysroot C:/Users/spatel/AppData/Local/Android/Sdk/ndk/21.2.6472646/build//../toolchains/llvm/prebuilt/windows-x86_64/sysroot -g -Wno-invalid-command-line-argument -Wno-unused-command-line-argument -D_FORTIFY_SOURCE\u003d2 -fpic -O2 -DNDEBUG -IC:/Users/spatel/StudioProjects/GPIO/app/src/main/jni -DANDROID -Wformat -Werror\u003dformat-security"
+        }
+      ],
+      "output": "C:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\obj\\local\\arm64-v8a\\libgpio-android-jni.so"
+    }
+  },
+  "toolchains": {
+    "toolchain-arm64-v8a": {
+      "cCompilerExecutable": "C:\\Users\\spatel\\AppData\\Local\\Android\\Sdk\\ndk\\21.2.6472646\\build\\..\\toolchains\\llvm\\prebuilt\\windows-x86_64\\bin\\clang.exe"
+    }
+  },
+  "cFileExtensions": [
+    "c"
+  ],
+  "cppFileExtensions": []
+}

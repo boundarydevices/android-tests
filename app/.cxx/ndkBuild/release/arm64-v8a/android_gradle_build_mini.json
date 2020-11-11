@@ -1,0 +1,18 @@
+{
+  "buildFiles": [
+    "C:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk"
+  ],
+  "cleanCommands": [
+    "C:\\Users\\spatel\\AppData\\Local\\Android\\Sdk\\ndk\\21.2.6472646\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk APP_ABI\u003darm64-v8a NDK_ALL_ABIS\u003darm64-v8a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-29 NDK_OUT\u003dC:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\lib clean"
+  ],
+  "buildTargetsCommand": "C:\\Users\\spatel\\AppData\\Local\\Android\\Sdk\\ndk\\21.2.6472646\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk APP_ABI\u003darm64-v8a NDK_ALL_ABIS\u003darm64-v8a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-29 NDK_OUT\u003dC:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\lib {LIST_OF_TARGETS_TO_BUILD}",
+  "libraries": {
+    "gpio-android-jni-release-arm64-v8a": {
+      "artifactName": "gpio-android-jni",
+      "buildCommand": "C:\\Users\\spatel\\AppData\\Local\\Android\\Sdk\\ndk\\21.2.6472646\\ndk-build.cmd NDK_PROJECT_PATH\u003dnull APP_BUILD_SCRIPT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\src\\main\\jni\\Android.mk APP_ABI\u003darm64-v8a NDK_ALL_ABIS\u003darm64-v8a NDK_DEBUG\u003d0 APP_PLATFORM\u003dandroid-29 NDK_OUT\u003dC:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj NDK_LIBS_OUT\u003dC:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\lib C:/Users/spatel/StudioProjects/GPIO/app/build/intermediates/ndkBuild/release/obj/local/arm64-v8a/libgpio-android-jni.so",
+      "abi": "arm64-v8a",
+      "output": "C:\\Users\\spatel\\StudioProjects\\GPIO\\app\\build\\intermediates\\ndkBuild\\release\\obj\\local\\arm64-v8a\\libgpio-android-jni.so",
+      "runtimeFiles": []
+    }
+  }
+}
