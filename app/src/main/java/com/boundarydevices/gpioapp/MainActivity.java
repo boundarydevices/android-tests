@@ -20,8 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private static final int GPIOR = 68;
     private static final int GPIOG = 69;
     private static final int GPIOB = 80;
-    private static final int GPIO_FB1 = 71;
-    private static final int GPIO_FB2 = 72;
+    private static final int GPIO_FB[] = { 3, 5, 10, 15, 64, 65, 70, 71, 72, 73, 74, 124, 125, 130 };
 
     private static final boolean ActiveLow = true;
 
@@ -56,8 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toogleButtonGpioB.setOnClickListener(this);
 
         gpioDevice = new GpioDevice(this);
-        gpioDevice.subscribePinEvent(GPIO_FB1, 2);
-        gpioDevice.subscribePinEvent(GPIO_FB2, 2);
+        for (int i = 0; i < GPIO_FB.length; i++)
+            gpioDevice.subscribePinEvent(GPIO_FB[i], 2);
 
         /* Initialize all GPIO to 0 at first */
         gpioDevice.set(gpioDevice.getBank(GPIO1), gpioDevice.getPin(GPIO1), ActiveLow, 0);
