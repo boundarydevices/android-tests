@@ -26,7 +26,7 @@ public class GpioDevice {
     }
     public int getBank(int gpioNumber) {
         int bank = 0;
-        while ((gpioNumber -= 32) > 0)
+        while ((gpioNumber -= 32) >= 0)
             bank++;
         return bank;
     }
