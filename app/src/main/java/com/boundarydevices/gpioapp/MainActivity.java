@@ -3,6 +3,7 @@ package com.boundarydevices.gpioapp;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.ToggleButton;
@@ -10,19 +11,16 @@ import android.widget.ToggleButton;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, GpioDevice.GpioDeviceListener {
 
     private static final String TAG = "GpioApp";
-    private static final int GPIO1 = 109;
-    private static final int GPIO2 = 110;
-    private static final int GPIO3 = 111;
-    private static final int GPIO4 = 112;
-    private static final int GPIO5 = 113;
-    private static final int GPIO6 = 114;
-    private static final int GPIO7 = 115;
-    private static final int GPIOR = 68;
-    private static final int GPIOG = 69;
-    private static final int GPIOB = 80;
-    private static final int GPIO_FB[] = { 3, 5, 10, 15, 64, 65, 70, 71, 72, 73, 74, 124, 125, 130 };
+    private static final int LOCK_NB_GPIO = 2;
+    private static final int[] LOCK1 = { 109, 110 };
+    private static final int[] LOCK2 = { 111, 112 };
+    private static final int[] LOCK3 = { 113, 114 };
+    private static final int[] LOCK4 = { 115, 72 };
+    private static final int[] LOCK5 = { 70, 71 };
+    private static final int[] LOCK6 = { 64, 65 };
+    private static final int[] LOCK7 = { 73, 74 };
 
-    private static final boolean ActiveLow = true;
+    private static final boolean ActiveLow = false;
 
     private GpioDevice gpioDevice;
 
@@ -38,10 +36,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         ToggleButton toogleButtonGpio5 = findViewById(R.id.toggleButtonGpio5);
         ToggleButton toogleButtonGpio6 = findViewById(R.id.toggleButtonGpio6);
         ToggleButton toogleButtonGpio7 = findViewById(R.id.toggleButtonGpio7);
-        ToggleButton toogleButtonGpioR = findViewById(R.id.toggleButtonGpioR);
-        ToggleButton toogleButtonGpioG = findViewById(R.id.toggleButtonGpioG);
-        ToggleButton toogleButtonGpioB = findViewById(R.id.toggleButtonGpioB);
-
 
         toogleButtonGpio1.setOnClickListener(this);
         toogleButtonGpio2.setOnClickListener(this);
@@ -50,84 +44,113 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         toogleButtonGpio5.setOnClickListener(this);
         toogleButtonGpio6.setOnClickListener(this);
         toogleButtonGpio7.setOnClickListener(this);
-        toogleButtonGpioR.setOnClickListener(this);
-        toogleButtonGpioG.setOnClickListener(this);
-        toogleButtonGpioB.setOnClickListener(this);
 
         gpioDevice = new GpioDevice(this);
-        for (int i = 0; i < GPIO_FB.length; i++)
-            gpioDevice.subscribePinEvent(GPIO_FB[i], 2);
 
         /* Initialize all GPIO to 0 at first */
-        gpioDevice.set(gpioDevice.getBank(GPIO1), gpioDevice.getPin(GPIO1), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIO2), gpioDevice.getPin(GPIO2), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIO3), gpioDevice.getPin(GPIO3), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIO4), gpioDevice.getPin(GPIO4), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIO5), gpioDevice.getPin(GPIO5), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIO6), gpioDevice.getPin(GPIO6), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIO7), gpioDevice.getPin(GPIO7), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIOR), gpioDevice.getPin(GPIOR), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIOG), gpioDevice.getPin(GPIOG), ActiveLow, 0);
-        gpioDevice.set(gpioDevice.getBank(GPIOB), gpioDevice.getPin(GPIOB), ActiveLow, 0);
+        for (int i = 0; i < LOCK_NB_GPIO; i++) {
+            gpioDevice.set(gpioDevice.getBank(LOCK1[i]), gpioDevice.getPin(LOCK1[i]), ActiveLow, 0);
+            gpioDevice.set(gpioDevice.getBank(LOCK2[i]), gpioDevice.getPin(LOCK2[i]), ActiveLow, 0);
+            gpioDevice.set(gpioDevice.getBank(LOCK3[i]), gpioDevice.getPin(LOCK3[i]), ActiveLow, 0);
+            gpioDevice.set(gpioDevice.getBank(LOCK4[i]), gpioDevice.getPin(LOCK4[i]), ActiveLow, 0);
+            gpioDevice.set(gpioDevice.getBank(LOCK5[i]), gpioDevice.getPin(LOCK5[i]), ActiveLow, 0);
+            gpioDevice.set(gpioDevice.getBank(LOCK6[i]), gpioDevice.getPin(LOCK6[i]), ActiveLow, 0);
+            gpioDevice.set(gpioDevice.getBank(LOCK7[i]), gpioDevice.getPin(LOCK7[i]), ActiveLow, 0);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        ToggleButton toggleButton = findViewById(v.getId());
+        final ToggleButton toggleButton = findViewById(v.getId());
+        int on = toggleButton.isChecked() ? 0 : 1;
+        toggleButton.setEnabled(false);
+
         switch (v.getId()) {
             case R.id.toggleButtonGpio1:
-                Log.i(TAG, "GPIO 1 is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIO1), gpioDevice.getPin(GPIO1),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                Log.i(TAG, "LOCK 1 is now " + on);
+                gpioDevice.set(gpioDevice.getBank(LOCK1[on]), gpioDevice.getPin(LOCK1[on]),
+                        ActiveLow, 1);
                 break;
             case R.id.toggleButtonGpio2:
-                Log.i(TAG, "GPIO 2 is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIO2), gpioDevice.getPin(GPIO2),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                Log.i(TAG, "LOCK 2 is now " + on);
+                gpioDevice.set(gpioDevice.getBank(LOCK2[on]), gpioDevice.getPin(LOCK2[on]),
+                        ActiveLow, 1);
                 break;
             case R.id.toggleButtonGpio3:
-                Log.i(TAG, "GPIO 3 is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIO3), gpioDevice.getPin(GPIO3),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                Log.i(TAG, "LOCK 3 is now " + on);
+                gpioDevice.set(gpioDevice.getBank(LOCK3[on]), gpioDevice.getPin(LOCK3[on]),
+                        ActiveLow, 1);
                 break;
             case R.id.toggleButtonGpio4:
-                Log.i(TAG, "GPIO 4 is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIO4), gpioDevice.getPin(GPIO4),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                Log.i(TAG, "LOCK 4 is now " + on);
+                gpioDevice.set(gpioDevice.getBank(LOCK4[on]), gpioDevice.getPin(LOCK4[on]),
+                        ActiveLow, 1);
                 break;
             case R.id.toggleButtonGpio5:
-                Log.i(TAG, "GPIO 5 is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIO5), gpioDevice.getPin(GPIO5),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                Log.i(TAG, "LOCK 5 is now " + on);
+                gpioDevice.set(gpioDevice.getBank(LOCK5[on]), gpioDevice.getPin(LOCK5[on]),
+                        ActiveLow, 1);
                 break;
             case R.id.toggleButtonGpio6:
-                Log.i(TAG, "GPIO 6 is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIO6), gpioDevice.getPin(GPIO6),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                Log.i(TAG, "LOCK 6 is now " + on);
+                gpioDevice.set(gpioDevice.getBank(LOCK6[on]), gpioDevice.getPin(LOCK6[on]),
+                        ActiveLow, 1);
                 break;
             case R.id.toggleButtonGpio7:
-                Log.i(TAG, "GPIO 7 is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIO7), gpioDevice.getPin(GPIO7),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
-                break;
-            case R.id.toggleButtonGpioR:
-                Log.i(TAG, "GPIO R is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIOR), gpioDevice.getPin(GPIOR),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
-                break;
-            case R.id.toggleButtonGpioG:
-                Log.i(TAG, "GPIO G is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIOG), gpioDevice.getPin(GPIOG),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
-                break;
-            case R.id.toggleButtonGpioB:
-                Log.i(TAG, "GPIO B is now " + toggleButton.isChecked());
-                gpioDevice.set(gpioDevice.getBank(GPIOB), gpioDevice.getPin(GPIOB),
-                        ActiveLow, toggleButton.isChecked() ? 1 : 0);
+                Log.i(TAG, "LOCK 7 is now " + on);
+                gpioDevice.set(gpioDevice.getBank(LOCK7[on]), gpioDevice.getPin(LOCK7[on]),
+                        ActiveLow, 1);
                 break;
             default:
                 Log.d(TAG, "unknown id: " + v.getId());
         }
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                // wait for 5 second before enabling next move
+                switch (toggleButton.getId()) {
+                    case R.id.toggleButtonGpio1:
+                        Log.i(TAG, "LOCK 1 reset");
+                        for (int i = 0; i < LOCK_NB_GPIO; i++)
+                            gpioDevice.set(gpioDevice.getBank(LOCK1[i]), gpioDevice.getPin(LOCK1[i]), ActiveLow, 0);
+                        break;
+                    case R.id.toggleButtonGpio2:
+                        Log.i(TAG, "LOCK 2 reset");
+                        for (int i = 0; i < LOCK_NB_GPIO; i++)
+                            gpioDevice.set(gpioDevice.getBank(LOCK2[i]), gpioDevice.getPin(LOCK2[i]), ActiveLow, 0);
+                        break;
+                    case R.id.toggleButtonGpio3:
+                        Log.i(TAG, "LOCK 3  reset");
+                        for (int i = 0; i < LOCK_NB_GPIO; i++)
+                            gpioDevice.set(gpioDevice.getBank(LOCK3[i]), gpioDevice.getPin(LOCK3[i]), ActiveLow, 0);
+                        break;
+                    case R.id.toggleButtonGpio4:
+                        Log.i(TAG, "LOCK 4 reset");
+                        for (int i = 0; i < LOCK_NB_GPIO; i++)
+                            gpioDevice.set(gpioDevice.getBank(LOCK4[i]), gpioDevice.getPin(LOCK4[i]), ActiveLow, 0);
+                        break;
+                    case R.id.toggleButtonGpio5:
+                        Log.i(TAG, "LOCK 5 reset");
+                        for (int i = 0; i < LOCK_NB_GPIO; i++)
+                            gpioDevice.set(gpioDevice.getBank(LOCK5[i]), gpioDevice.getPin(LOCK5[i]), ActiveLow, 0);
+                        break;
+                    case R.id.toggleButtonGpio6:
+                        Log.i(TAG, "LOCK 6 reset");
+                        for (int i = 0; i < LOCK_NB_GPIO; i++)
+                            gpioDevice.set(gpioDevice.getBank(LOCK6[i]), gpioDevice.getPin(LOCK6[i]), ActiveLow, 0);
+                        break;
+                    case R.id.toggleButtonGpio7:
+                        Log.i(TAG, "LOCK 7 reset");
+                        for (int i = 0; i < LOCK_NB_GPIO; i++)
+                            gpioDevice.set(gpioDevice.getBank(LOCK7[i]), gpioDevice.getPin(LOCK7[i]), ActiveLow, 0);
+                        break;
+                    default:
+                        Log.d(TAG, "unknown id: " + toggleButton.getId());
+                }
+                toggleButton.setEnabled(true);
+            }
+        }, 5000);
     }
 
     @Override

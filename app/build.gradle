@@ -14,7 +14,7 @@ android {
     ndkVersion "21.2.6472646"
 
     defaultConfig {
-        applicationId "com.boundarydevices.gpioapp"
+        applicationId "com.boundarydevices.gpioapp.linear"
         minSdkVersion 29
         targetSdkVersion 29
         versionCode 1

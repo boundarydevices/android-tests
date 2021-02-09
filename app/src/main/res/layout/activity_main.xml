@@ -79,39 +79,4 @@
         app:layout_constraintStart_toEndOf="@+id/toggleButtonGpio6"
         tools:layout_editor_absoluteY="16dp" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpioR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="84dp"
-        android:text="R"
-        android:textOff="R OFF"
-        android:textOn="R ON"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGpio2" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonGpioG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="G"
-        android:textOff="G OFF"
-        android:textOn="G ON"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpioB"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpioR"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGpio3" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonGpioB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="B"
-        android:textOff="B OFF"
-        android:textOn="B ON"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpioG"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGpio4" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
