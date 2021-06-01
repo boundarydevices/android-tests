@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class MainActivity extends AppCompatActivity {
     private View mContentView;
@@ -14,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mContentView = findViewById(R.id.fullscreen_content);
+        WebView myWebView = (WebView) findViewById(R.id.webview);
+        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.loadUrl("https://boundarydevices.com");
     }
 
     @Override
