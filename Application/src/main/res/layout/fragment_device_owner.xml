@@ -78,6 +78,13 @@
             android:layout_marginStart="@dimen/spacing_medium"
             android:text="@string/set_as_preferred"/>
 
+        <Button
+            android:id="@+id/start_lock_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_medium"
+            android:text="@string/start_lock_task" />
+
     </LinearLayout>
 
 </ScrollView>

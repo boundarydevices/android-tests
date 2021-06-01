@@ -39,5 +39,6 @@ enforce use of a specific launcher.
     <string name="label_launcher">Home Launcher</string>
     <string name="set_as_preferred">Set as preferred</string>
     <string name="clear_preferred">Clear preferred</string>
+    <string name="start_lock_task">Start Lock Task</string>
 
 </resources>

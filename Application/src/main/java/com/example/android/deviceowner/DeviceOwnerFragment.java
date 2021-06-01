@@ -17,6 +17,7 @@
 package com.example.android.deviceowner;
 
 import android.app.Activity;
+import android.app.ActivityOptions;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.ContentResolver;
@@ -24,6 +25,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.provider.Settings;
@@ -53,14 +55,18 @@ public class DeviceOwnerFragment extends Fragment {
     // Keys for SharedPreferences
     private static final String PREFS_DEVICE_OWNER = "DeviceOwnerFragment";
     private static final String PREF_LAUNCHER = "launcher";
+    private static final String KIOSK_PACKAGE = "com.boundarydevices.kioskapp";
+    private static final String[] APP_PACKAGES = {KIOSK_PACKAGE};
 
     private DevicePolicyManager mDevicePolicyManager;
+    private Context mContext;
 
     // View references
     private Switch mSwitchAutoTime;
     private Switch mSwitchAutoTimeZone;
     private Spinner mAvailableLaunchers;
     private Button mButtonLauncher;
+    private Button mButtonLockTask;
 
     // Adapter for the spinner to show list of available launchers
     private LauncherAdapter mAdapter;
@@ -104,6 +110,16 @@ public class DeviceOwnerFragment extends Fragment {
                     }
                     retrieveCurrentSettings(getActivity());
                     break;
+                case R.id.start_lock_task:
+                    ComponentName adminName = DeviceOwnerReceiver.getComponentName(mContext);
+                    mDevicePolicyManager.setLockTaskPackages(adminName, APP_PACKAGES);
+                    ActivityOptions options = ActivityOptions.makeBasic();
+                    options.setLockTaskEnabled(true);
+                    PackageManager packageManager = mContext.getPackageManager();
+                    Intent launchIntent = packageManager.getLaunchIntentForPackage(KIOSK_PACKAGE);
+                    if (launchIntent != null)
+                        mContext.startActivity(launchIntent, options.toBundle());
+                    break;
             }
         }
 
@@ -130,10 +146,12 @@ public class DeviceOwnerFragment extends Fragment {
         mSwitchAutoTimeZone = (Switch) view.findViewById(R.id.switch_auto_time_zone);
         mAvailableLaunchers = (Spinner) view.findViewById(R.id.available_launchers);
         mButtonLauncher = (Button) view.findViewById(R.id.set_preferred_launcher);
+        mButtonLockTask = (Button) view.findViewById(R.id.start_lock_task);
         // Bind event handlers
         mSwitchAutoTime.setOnCheckedChangeListener(mOnCheckedChangeListener);
         mSwitchAutoTimeZone.setOnCheckedChangeListener(mOnCheckedChangeListener);
         mButtonLauncher.setOnClickListener(mOnClickListener);
+        mButtonLockTask.setOnClickListener(mOnClickListener);
     }
 
     @Override
@@ -141,6 +159,7 @@ public class DeviceOwnerFragment extends Fragment {
         super.onAttach(context);
         mDevicePolicyManager =
                 (DevicePolicyManager) context.getSystemService(Activity.DEVICE_POLICY_SERVICE);
+        mContext = context;
     }
 
     @Override
