@@ -38,6 +38,7 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
     private ByteBuffer mInputBuffer;
     private ByteBuffer mOutputBuffer;
     private SerialPort mSerialPort;
+    private boolean mPingPong = false;
 
     private static final int MESSAGE_LOG = 1;
 
@@ -120,6 +121,13 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
                 }
                 m.obj = text.concat("\n");
                 mHandler.sendMessage(m);
+                if (mPingPong) {
+                    try {
+                        mSerialPort.getOutputStream().write(buffer, 0, ret);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
         Log.d(TAG, "thread out");
