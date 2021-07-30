@@ -18,8 +18,6 @@
     package="com.android.serialchat"
     android:sharedUserId="android.uid.system" >
 
-    <uses-permission android:name="android.permission.SERIAL_PORT"/>
-
     <application android:label="Serial Chat">
         <activity android:name="SerialChat" android:label="Serial Chat">
             <intent-filter>

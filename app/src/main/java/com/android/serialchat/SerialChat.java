@@ -17,20 +17,15 @@
 package com.android.serialchat;
 
 import android.app.Activity;
-import android.content.Context;
-import android.hardware.SerialManager;
-import android.hardware.SerialPort;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.ParcelFileDescriptor;
 import android.view.KeyEvent;
-import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.File;
 import java.nio.ByteBuffer;
 import java.io.IOException;
 
@@ -42,9 +37,7 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
     private EditText mEditText;
     private ByteBuffer mInputBuffer;
     private ByteBuffer mOutputBuffer;
-    private SerialManager mSerialManager;
     private SerialPort mSerialPort;
-    private boolean mPermissionRequestPending;
 
     private static final int MESSAGE_LOG = 1;
 
@@ -52,40 +45,24 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mSerialManager = (SerialManager)getSystemService(Context.SERIAL_SERVICE);
         setContentView(R.layout.serial_chat);
         mLog = (TextView)findViewById(R.id.log);
         mEditText = (EditText)findViewById(R.id.message);
         mEditText.setOnEditorActionListener(this);
-
-        if (false) {
-            mInputBuffer = ByteBuffer.allocateDirect(1024);
-            mOutputBuffer = ByteBuffer.allocateDirect(1024);
-        } else {
-            mInputBuffer = ByteBuffer.allocate(1024);
-            mOutputBuffer = ByteBuffer.allocate(1024);
-        }
+        mInputBuffer = ByteBuffer.allocate(1024);
+        mOutputBuffer = ByteBuffer.allocate(1024);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        String[] ports = mSerialManager.getSerialPorts();
-        Log.i(TAG, "found " + ports.length + " ports");
-        if (ports != null && ports.length > 0) {
-            for (int i = 0; i < ports.length; i++) {
-                Log.i(TAG, "found port: " + ports[i]);
+        try {
+            mSerialPort = new SerialPort(new File("/dev/ttymxc1"), 115200, 0);
+            if (mSerialPort != null) {
+                new Thread(this).start();
             }
-            try {
-                mSerialPort = mSerialManager.openSerialPort(ports[0], 115200);
-                if (mSerialPort != null) {
-                    new Thread(this).start();
-                }
-            } catch (IOException e) {
-            }
+        } catch (IOException e) {
         }
-
     }
 
     @Override
@@ -97,10 +74,7 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
     @Override
     public void onDestroy() {
         if (mSerialPort != null) {
-            try {
-                mSerialPort.close();
-            } catch (IOException e) {
-            }
+            mSerialPort.close();
             mSerialPort = null;
         }
         super.onDestroy();
@@ -112,9 +86,7 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
                 String text = v.getText().toString();
                 Log.d(TAG, "write: " + text);
                 byte[] bytes = text.getBytes();
-                mOutputBuffer.clear();
-                mOutputBuffer.put(bytes);
-                mSerialPort.write(mOutputBuffer, bytes.length);
+                mSerialPort.getOutputStream().write(bytes);
             } catch (IOException e) {
                 Log.e(TAG, "write failed", e);
             }
@@ -133,9 +105,8 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
             try {
                 Log.d(TAG, "calling read");
                 mInputBuffer.clear();
-                ret = mSerialPort.read(mInputBuffer);
+                ret = mSerialPort.getInputStream().read(buffer);
                 Log.d(TAG, "read returned " + ret);
-                mInputBuffer.get(buffer, 0, ret);
             } catch (IOException e) {
                 Log.e(TAG, "read failed", e);
                 break;
@@ -164,5 +135,3 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
         }
     };
 }
-
-
