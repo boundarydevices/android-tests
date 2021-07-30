@@ -114,9 +114,11 @@ public class SerialChat extends Activity implements Runnable, TextView.OnEditorA
 
             if (ret > 0) {
                 Message m = Message.obtain(mHandler, MESSAGE_LOG);
-                String text = new String(buffer, 0, ret);
-                Log.d(TAG, "chat: " + text);
-                m.obj = text;
+                String text = new String("read[" + ret + "]");
+                for (int i = 0; i < ret; i++) {
+                    text = text.concat(String.format(" 0x%02x", buffer[i]));
+                }
+                m.obj = text.concat("\n");
                 mHandler.sendMessage(m);
             }
         }
