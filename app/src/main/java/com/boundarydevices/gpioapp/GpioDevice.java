@@ -15,6 +15,7 @@ public class GpioDevice {
     public GpioDevice(GpioDeviceListener listener) {
         this.listener = listener;
     }
+    public GpioDevice() { }
     public native int get(int bank, int pin, boolean active_low);
     public native int set(int bank, int pin, boolean active_low, int value);
     public native int waitPinEvent(int bank, int pin, int timeout_s);

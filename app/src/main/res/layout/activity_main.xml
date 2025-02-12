@@ -8,110 +8,90 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/gpioText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
+        android:layout_marginTop="20dp"
+        android:text="GPIO App"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.18"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonClear"
+        app:layout_constraintVertical_bias="0.0" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpio1"
+    <Button
+        android:id="@+id/buttonSet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:text="toggleButtonGpio1"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpio2"
+        android:layout_marginTop="150dp"
+        android:text="Set"
+        app:layout_constraintEnd_toStartOf="@+id/buttonClear"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="16dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpio2"
+    <Button
+        android:id="@+id/buttonClear"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="toggleButtonGpio2"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpio3"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpio1"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginTop="150dp"
+        android:text="Clear"
+        app:layout_constraintEnd_toStartOf="@+id/buttonGet"
+        app:layout_constraintStart_toEndOf="@+id/buttonSet"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpio3"
+    <Button
+        android:id="@+id/buttonGet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="toggleButtonGpio3"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpio4"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpio2"
-        tools:layout_editor_absoluteY="16dp" />
+        android:layout_marginTop="150dp"
+        android:text="Get"
+        app:layout_constraintStart_toEndOf="@+id/buttonClear"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpio4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="toggleButtonGpio4"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpio5"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpio3"
-        tools:layout_editor_absoluteY="16dp" />
+    <EditText
+        android:id="@+id/gpioBankBox"
+        android:layout_width="88dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/gpioBankTxt"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpio5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="toggleButtonGpio5"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpio6"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpio4"
-        tools:layout_editor_absoluteY="16dp" />
+    <EditText
+        android:id="@+id/gpioPinBox"
+        android:layout_width="88dp"
+        android:layout_height="43dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/gpioPinTxt"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpio6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="toggleButtonGpio6"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpio7"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpio5"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonGpio7"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="toggleButtonGpio7"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpio6"
-        tools:layout_editor_absoluteY="16dp" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonGpioR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="104dp"
-        android:layout_marginTop="84dp"
-        android:text="R"
-        android:textOff="R OFF"
-        android:textOn="R ON"
+    <EditText
+        android:id="@+id/gpioBankTxt"
+        android:layout_width="98dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="50dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="GPIO Bank:"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGpio2" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
-        android:id="@+id/toggleButtonGpioG"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="G"
-        android:textOff="G OFF"
-        android:textOn="G ON"
-        app:layout_constraintEnd_toStartOf="@+id/toggleButtonGpioB"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpioR"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGpio3" />
-
-    <ToggleButton
-        android:id="@+id/toggleButtonGpioB"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="84dp"
-        android:text="B"
-        android:textOff="B OFF"
-        android:textOn="B ON"
-        app:layout_constraintStart_toEndOf="@+id/toggleButtonGpioG"
-        app:layout_constraintTop_toBottomOf="@+id/toggleButtonGpio4" />
+    <EditText
+        android:id="@+id/gpioPinTxt"
+        android:layout_width="98dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:inputType="text"
+        android:text="GPIO Pin:"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
