@@ -35,24 +35,33 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        if ((gpioBankBox.getText().length() == 0) || (gpioPinBox.getText().length() == 0)) {
+            gpioText.setText("Requires both Bank & Pin to be set!");
+            return;
+        }
         int gpioBank = Integer.parseInt(gpioBankBox.getText().toString());
         int gpioPin = Integer.parseInt(gpioPinBox.getText().toString());
+        int ret;
 
         switch (v.getId()) {
             case R.id.buttonSet:
-                Log.i(TAG, "Set GPIO " + gpioBank + " " + gpioPin);
                 gpioText.setText("Set GPIO " + gpioBank + " " + gpioPin);
-                gpioDevice.set(gpioBank, gpioPin, 1);
+                ret = gpioDevice.set(gpioBank, gpioPin, 1);
+                if (ret < 0)
+                    gpioText.setText("Couldn't set GPIO " + ret);
                 break;
             case R.id.buttonClear:
-                Log.i(TAG, "Clear GPIO " + gpioBank + " " + gpioPin);
                 gpioText.setText("Clear GPIO " + gpioBank + " " + gpioPin);
-                gpioDevice.set(gpioBank, gpioPin, 0);
+                ret = gpioDevice.set(gpioBank, gpioPin, 0);
+                if (ret < 0)
+                    gpioText.setText("Couldn't clear GPIO " + ret);
                 break;
             case R.id.buttonGet:
-                Log.i(TAG, "Get GPIO " + gpioBank + " " + gpioPin);
                 int value = gpioDevice.get(gpioBank, gpioPin);
-                gpioText.setText("Clear GPIO " + gpioBank + " " + gpioPin + ": " + value);
+                if (value < 0)
+                    gpioText.setText("Couldn't get GPIO " + value);
+                else
+                    gpioText.setText("Get GPIO " + gpioBank + " " + gpioPin + ": " + value);
                 break;
             default:
                 Log.d(TAG, "unknown id: " + v.getId());
